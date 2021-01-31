@@ -9,10 +9,13 @@ Các bước thực hiện để chạy project này:
 
 ### Chạy project
 1. Clone project này: git clone https://github.com/haryphamdev/facebook-messenger-restaurant-bot-vietnamese-version.git
+
 2. Tại thư mục root, tạo file .env
 
 Nội dung file .env thì copy từ file .env.example
+
 3. Deploy lên Heroku
+
 4. Cấu hình Heroku app, Facebook App, Facebook Webhook
 
 5. Hướng dẫn chi tiết: Watch this video -> https://www.youtube.com/watch?v=_fEwklHvncU
