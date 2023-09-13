@@ -126,6 +126,7 @@ async function handlePostback(sender_psid, received_postback) {
         case "no":
             response = { text: "Oops, try sending another image." };
             break;
+        case "RESTART_BOT":
         case "GET_STARTED":
             await chatbotService.handleGetStarted(sender_psid);
             break;
@@ -194,7 +195,6 @@ let setupProfile = async (req, res) => {
     return res.send("Setup user profile successfully!");
 };
 
-//
 let setupPersistentMenu = async (req, res) => {
     // Construct the message body
     let request_body = {
@@ -205,7 +205,7 @@ let setupPersistentMenu = async (req, res) => {
                 call_to_actions: [
                     {
                         type: "web_url",
-                        title: "Facebook cá nhân của Nam Nguyễn",
+                        title: "Facebook của Nam Nguyễn",
                         url: "https://www.facebook.com/profile.php?id=100013610988607",
                         webview_height_ratio: "full",
                     },
@@ -235,6 +235,7 @@ let setupPersistentMenu = async (req, res) => {
         },
         (err, res, body) => {
             if (!err) {
+                console.log(body);
                 console.log("Setup persistent menu successfully!");
             } else {
                 console.error("Setup persistent menu failed:" + err);
