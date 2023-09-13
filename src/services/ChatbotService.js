@@ -3,6 +3,8 @@ import request from "request";
 
 let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+const IMAGE_GET_STARTED = "https://bit.ly/3RkPcOi";
+
 function callSendAPI(sender_psid, response) {
     // Construct the message body
     let request_body = {
@@ -55,15 +57,58 @@ let handleGetStarted = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
             let username = await getUsername(sender_psid);
-            let response = {
+            let response1 = {
                 text: `OK! Chào mừng bạn ${username} đến với Booking Care của Nam Nguyễn`,
             };
-            await callSendAPI(sender_psid, response);
+
+            let response2 = sendGetStartedTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            // send generic template
+            await callSendAPI(sender_psid, response2);
             resolve("OK!");
         } catch (error) {
             reject(error);
         }
     });
+};
+
+let sendGetStartedTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Xin chào bạn đến với fanpage của trang Booking Care",
+                        subtitle: "Dưới đây là 1 số lựa chọn của bạn",
+                        image_url: IMAGE_GET_STARTED,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "THAM QUAN CÁC BÁC SĨ NỔI BẬT",
+                                payload: "SIGHTSEEING",
+                            },
+                            {
+                                type: "postback",
+                                title: "ĐẶT LỊCH KHÁM BỆNH",
+                                payload: "BOOKING",
+                            },
+                            {
+                                type: "postback",
+                                title: "HƯỚNG DẪN SỬ DỤNG BOT",
+                                payload: "GUIDE_TO_USE",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
 };
 
 module.exports = {
