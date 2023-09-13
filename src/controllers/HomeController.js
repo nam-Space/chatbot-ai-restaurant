@@ -194,9 +194,61 @@ let setupProfile = async (req, res) => {
     return res.send("Setup user profile successfully!");
 };
 
+//
+let setupPersistentMenu = async (req, res) => {
+    // Construct the message body
+    let request_body = {
+        persistent_menu: [
+            {
+                locale: "default",
+                composer_input_disabled: false,
+                call_to_actions: [
+                    {
+                        type: "web_url",
+                        title: "Facebook cá nhân của Nam Nguyễn",
+                        url: "https://www.facebook.com/profile.php?id=100013610988607",
+                        payload: "VIEW_FACEBOOK",
+                    },
+                    {
+                        type: "web_url",
+                        title: "Tiktok của Nam Nguyễn",
+                        url: "https://www.tiktok.com/@nam30122003?is_from_webapp=1&sender_device=pc",
+                        payload: "VIEW_TIKTOK",
+                    },
+                    {
+                        type: "postback",
+                        title: "Khởi động lại bot",
+                        webview_height_ratio: "RESTART_BOT",
+                    },
+                ],
+            },
+        ],
+    };
+
+    // Send the HTTP request to the Messenger Platform
+    await request(
+        {
+            uri: `https://graph.facebook.com/v17.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+            qs: { access_token: PAGE_ACCESS_TOKEN },
+            method: "POST",
+            json: request_body,
+        },
+        (err, res, body) => {
+            if (!err) {
+                console.log("Setup persistent menu successfully!");
+            } else {
+                console.error("Setup persistent menu failed:" + err);
+            }
+        }
+    );
+
+    return res.send("Setup persistent menu successfully!");
+};
+
 module.exports = {
-    getHomePage: getHomePage,
-    postWebhook: postWebhook,
-    getWebhook: getWebhook,
-    setupProfile: setupProfile,
+    getHomePage,
+    postWebhook,
+    getWebhook,
+    setupProfile,
+    setupPersistentMenu,
 };
