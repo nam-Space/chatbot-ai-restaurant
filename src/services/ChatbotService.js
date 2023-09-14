@@ -169,7 +169,7 @@ let getSightseeingTemplate = () => {
     return response;
 };
 
-let handleSightseeing = () => {
+let handleSightseeing = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
             let response1 = getSightseeingTemplate();
