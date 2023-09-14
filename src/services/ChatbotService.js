@@ -8,6 +8,14 @@ const IMAGE_DOCTORS = "https://bit.ly/nam-bot-3";
 const IMAGE_BOOKING = "https://bit.ly/nam-bot-4";
 const IMAGE_SPECIALTY = "https://bit.ly/nam-bot-5";
 
+const IMAGE_LIST_PHD = [
+    "https://bit.ly/nam-bot-6",
+    "https://bit.ly/nam-bot-7",
+    "https://bit.ly/nam-bot-8",
+];
+
+const IMAGE_YOUNG_DOCTOR = ["https://bit.ly/48eI9wA", "https://bit.ly/46fzI2p"];
+
 function callSendAPI(sender_psid, response) {
     // Construct the message body
     let request_body = {
@@ -184,7 +192,127 @@ let handleSightseeing = (sender_psid) => {
     });
 };
 
+let getPHPTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Tiến sĩ Hà Văn Quyết",
+                        subtitle: "Tiến sĩ ưu tú",
+                        image_url: IMAGE_LIST_PHD[0],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "HA_VAN_QUYET",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Tiến sĩ Nguyễn Thi Hùng",
+                        subtitle: "Tiến sĩ ưu tú",
+                        image_url: IMAGE_LIST_PHD[1],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "NGUYEN_THI_HUNG",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Tiến sĩ Vũ Thái Hà",
+                        subtitle: "Tiến sĩ ưu tú",
+                        image_url: IMAGE_LIST_PHD[2],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "VU_THAI_HA",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+
+let handleShowPHD = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response1 = getPHPTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+let getYoungDoctorTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Bác sĩ Lê Thị Thùy Trang",
+                        subtitle: "Những bác sĩ xinh đẹp của chúng tôi",
+                        image_url: IMAGE_YOUNG_DOCTOR[0],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "LE_THI_THUY_TRANG",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Bác sĩ Lương Thủy Thu",
+                        subtitle: "Những bác sĩ xinh đẹp của chúng tôi",
+                        image_url: IMAGE_YOUNG_DOCTOR[1],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "LUONG_THUY_THU",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+
+let handleShowYoungDoctor = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response1 = getYoungDoctorTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 module.exports = {
     handleGetStarted,
     handleSightseeing,
+    handleShowPHD,
+    handleShowYoungDoctor,
 };

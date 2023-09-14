@@ -135,6 +135,21 @@ async function handlePostback(sender_psid, received_postback) {
             await chatbotService.handleSightseeing(sender_psid);
             break;
 
+        case "PHD":
+            await chatbotService.handleShowPHD(sender_psid);
+            break;
+
+        case "YOUNG_DOCTOR":
+            await chatbotService.handleShowYoungDoctor(sender_psid);
+            break;
+
+        case "HA_VAN_QUYET":
+        case "NGUYEN_THI_HUNG":
+        case "VU_THAI_HA":
+        case "LE_THI_THUY_TRANG":
+        case "LUONG_THUY_THU":
+            break;
+
         default:
             response = {
                 text: `Oops, I don't know response with postback ${payload}`,
