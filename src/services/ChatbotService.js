@@ -9,9 +9,9 @@ const IMAGE_BOOKING = "https://bit.ly/nam-bot-4";
 const IMAGE_SPECIALTY = "https://bit.ly/nam-bot-5";
 
 const IMAGE_LIST_PHD = [
-    "https://bit.ly/nam-bot-6",
-    "https://bit.ly/nam-bot-7",
-    "https://bit.ly/nam-bot-8",
+    "https://bit.ly/3PCJSod",
+    "https://bit.ly/48g6ySr",
+    "https://bit.ly/3rfbwOK",
 ];
 
 const IMAGE_YOUNG_DOCTOR = ["https://bit.ly/48eI9wA", "https://bit.ly/46fzI2p"];
