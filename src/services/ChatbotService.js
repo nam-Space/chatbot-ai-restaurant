@@ -3,7 +3,10 @@ import request from "request";
 
 let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-const IMAGE_GET_STARTED = "https://bit.ly/3RkPcOi";
+const IMAGE_GET_STARTED = "https://bit.ly/nam-bot-1";
+const IMAGE_DOCTORS = "https://bit.ly/nam-bot-3";
+const IMAGE_BOOKING = "https://bit.ly/nam-bot-4";
+const IMAGE_SPECIALTY = "https://bit.ly/nam-bot-5";
 
 function callSendAPI(sender_psid, response) {
     // Construct the message body
@@ -53,29 +56,7 @@ let getUsername = (sender_psid) => {
     });
 };
 
-let handleGetStarted = (sender_psid) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let username = await getUsername(sender_psid);
-            let response1 = {
-                text: `Chào mừng bạn ${username} đến với Booking Care của Nam Nguyễn`,
-            };
-
-            let response2 = sendGetStartedTemplate();
-
-            // send message
-            await callSendAPI(sender_psid, response1);
-
-            // send generic template
-            await callSendAPI(sender_psid, response2);
-            resolve("OK!");
-        } catch (error) {
-            reject(error);
-        }
-    });
-};
-
-let sendGetStartedTemplate = () => {
+let getStartedTemplate = () => {
     let response = {
         attachment: {
             type: "template",
@@ -89,7 +70,7 @@ let sendGetStartedTemplate = () => {
                         buttons: [
                             {
                                 type: "postback",
-                                title: "THAM QUAN CÁC BÁC SĨ NỔI BẬT",
+                                title: "THAM QUAN DỊCH VỤ",
                                 payload: "SIGHTSEEING",
                             },
                             {
@@ -111,6 +92,99 @@ let sendGetStartedTemplate = () => {
     return response;
 };
 
+let handleGetStarted = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let username = await getUsername(sender_psid);
+            let response1 = {
+                text: `Chào mừng bạn ${username} đến với Booking Care của Nam Nguyễn`,
+            };
+
+            let response2 = getStartedTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            // send generic template
+            await callSendAPI(sender_psid, response2);
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+let getSightseeingTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Bác sĩ nổi bật",
+                        subtitle: "Những bác sĩ nổi bật của chúng tôi",
+                        image_url: IMAGE_DOCTORS,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "TIẾN SĨ",
+                                payload: "PHD",
+                            },
+                            {
+                                type: "postback",
+                                title: "BÁC SĨ TRẺ TUỔI",
+                                payload: "YOUNG_DOCTOR",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Giờ mở cửa",
+                        subtitle: "T2-T7 8:00AM - 5:00PM",
+                        image_url: IMAGE_BOOKING,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "ĐẶT LỊCH KHÁM BỆNH",
+                                payload: "BOOKING",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Các chuyên khoa phổ biến",
+                        subtitle: "Các chuyên khoa nổi bật của chúng tôi",
+                        image_url: IMAGE_SPECIALTY,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "CHI TIẾT",
+                                payload: "SHOW_ROOMS",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+
+let handleSightseeing = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response1 = getSightseeingTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 module.exports = {
     handleGetStarted,
+    handleSightseeing,
 };
