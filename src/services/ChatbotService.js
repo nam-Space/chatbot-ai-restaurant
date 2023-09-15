@@ -336,9 +336,14 @@ let handleShowYoungDoctor = (sender_psid) => {
     });
 };
 
+let handleBackToService = async (sender_psid) => {
+    await handleSightseeing(sender_psid);
+};
+
 module.exports = {
     handleGetStarted,
     handleSightseeing,
     handleShowPHD,
     handleShowYoungDoctor,
+    handleBackToService,
 };

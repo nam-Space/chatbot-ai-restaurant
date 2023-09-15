@@ -151,6 +151,7 @@ async function handlePostback(sender_psid, received_postback) {
             break;
 
         case "BACK_TO_SERVICE":
+            await chatbotService.handleBackToService(sender_psid);
             break;
 
         default:
