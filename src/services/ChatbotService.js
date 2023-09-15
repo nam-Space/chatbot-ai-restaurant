@@ -18,7 +18,61 @@ const IMAGE_YOUNG_DOCTOR = ["https://bit.ly/48eI9wA", "https://bit.ly/46fzI2p"];
 
 const IMAGE_BACK_SERVICE = "https://bit.ly/3PDcwFN";
 
-function callSendAPI(sender_psid, response) {
+let sendMarkReadMessage = (sender_psid) => {
+    // Construct the message body
+    let request_body = {
+        recipient: {
+            id: sender_psid,
+        },
+        sender_action: "mark_seen",
+    };
+
+    // Send the HTTP request to the Messenger Platform
+    request(
+        {
+            uri: `https://graph.facebook.com/v18.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+            qs: { access_token: PAGE_ACCESS_TOKEN },
+            method: "POST",
+            json: request_body,
+        },
+        (err, res, body) => {
+            if (!err) {
+                console.log("sendMarkReadMessage sent!");
+            } else {
+                console.error("Unable to send sendMarkReadMessage:" + err);
+            }
+        }
+    );
+};
+
+let sendTypingOn = (sender_psid) => {
+    // Construct the message body
+    let request_body = {
+        recipient: {
+            id: sender_psid,
+        },
+        sender_action: "typing_on",
+    };
+
+    // Send the HTTP request to the Messenger Platform
+    request(
+        {
+            uri: `https://graph.facebook.com/v18.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+            qs: { access_token: PAGE_ACCESS_TOKEN },
+            method: "POST",
+            json: request_body,
+        },
+        (err, res, body) => {
+            if (!err) {
+                console.log("sendTypingOn sent!");
+            } else {
+                console.error("Unable to send sendTypingOn:" + err);
+            }
+        }
+    );
+};
+
+async function callSendAPI(sender_psid, response) {
     // Construct the message body
     let request_body = {
         recipient: {
@@ -27,8 +81,10 @@ function callSendAPI(sender_psid, response) {
         message: response,
     };
 
+    await sendMarkReadMessage(sender_psid);
+    await sendTypingOn(sender_psid);
     // Send the HTTP request to the Messenger Platform
-    request(
+    await request(
         {
             uri: "https://graph.facebook.com/v2.6/me/messages",
             qs: { access_token: PAGE_ACCESS_TOKEN },
