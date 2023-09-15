@@ -4,6 +4,8 @@ import request from "request";
 let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 const IMAGE_GET_STARTED = "https://bit.ly/nam-bot-1";
+const IMAGE_BACK_SERVICE = "https://bit.ly/3PDcwFN";
+
 const IMAGE_DOCTORS = "https://bit.ly/nam-bot-3";
 const IMAGE_BOOKING = "https://bit.ly/nam-bot-4";
 const IMAGE_SPECIALTY = "https://bit.ly/nam-bot-5";
@@ -16,7 +18,16 @@ const IMAGE_LIST_PHD = [
 
 const IMAGE_YOUNG_DOCTOR = ["https://bit.ly/48eI9wA", "https://bit.ly/46fzI2p"];
 
-const IMAGE_BACK_SERVICE = "https://bit.ly/3PDcwFN";
+const IMAGE_SHOW_SPECIALTIES = [
+    "https://cdn.bookingcare.vn/fr/w300/2023/06/20/112457-co-xuong-khop.jpg",
+    "https://cdn.bookingcare.vn/fr/w300/2023/06/20/113208-than-kinh.jpg",
+    "https://cdn.bookingcare.vn/fr/w300/2023/06/20/113221-benh-viem-gan.jpg",
+    "https://cdn.bookingcare.vn/fr/w300/2023/06/20/112550-tim-mach.jpg",
+];
+
+let handleBackToService = async (sender_psid) => {
+    await handleSightseeing(sender_psid);
+};
 
 let sendMarkReadMessage = (sender_psid) => {
     // Construct the message body
@@ -217,14 +228,14 @@ let getSightseeingTemplate = () => {
                         ],
                     },
                     {
-                        title: "Các chuyên khoa phổ biến",
+                        title: "Các chuyên khoa nổi bật",
                         subtitle: "Các chuyên khoa nổi bật của chúng tôi",
                         image_url: IMAGE_SPECIALTY,
                         buttons: [
                             {
                                 type: "postback",
-                                title: "CHI TIẾT",
-                                payload: "SHOW_ROOMS",
+                                title: "XEM CHUYÊN KHOA",
+                                payload: "SHOW_SPECIALTIES",
                             },
                         ],
                     },
@@ -392,8 +403,93 @@ let handleShowYoungDoctor = (sender_psid) => {
     });
 };
 
-let handleBackToService = async (sender_psid) => {
-    await handleSightseeing(sender_psid);
+let getSpecialtiesTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Cơ xương khớp",
+                        subtitle: "Khoa cơ xương khớp",
+                        image_url: IMAGE_SHOW_SPECIALTIES[0],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CÁC BÁC SĨ CHUYÊN KHOA",
+                                payload: "CO_XUONG_KHOP",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Thần kinh",
+                        subtitle: "Khoa thần kinh",
+                        image_url: IMAGE_SHOW_SPECIALTIES[1],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CÁC BÁC SĨ CHUYÊN KHOA",
+                                payload: "THAN_KINH",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Tiêu hoá",
+                        subtitle: "Khoa tiêu hoá",
+                        image_url: IMAGE_SHOW_SPECIALTIES[2],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CÁC BÁC SĨ CHUYÊN KHOA",
+                                payload: "TIEU_HOA",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Tim mạch",
+                        subtitle: "Khoa tim mạch",
+                        image_url: IMAGE_SHOW_SPECIALTIES[3],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CÁC BÁC SĨ CHUYÊN KHOA",
+                                payload: "TIM_MACH",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Quay trở lại",
+                        subtitle: "Quay trở lại dịch vụ",
+                        image_url: IMAGE_BACK_SERVICE,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "QUAY TRỞ LẠI",
+                                payload: "BACK_TO_SERVICE",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+
+let handleShowSpecialties = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response1 = getSpecialtiesTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
 };
 
 module.exports = {
@@ -402,4 +498,5 @@ module.exports = {
     handleShowPHD,
     handleShowYoungDoctor,
     handleBackToService,
+    handleShowSpecialties,
 };
