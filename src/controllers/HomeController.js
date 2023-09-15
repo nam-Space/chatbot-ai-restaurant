@@ -150,6 +150,9 @@ async function handlePostback(sender_psid, received_postback) {
         case "LUONG_THUY_THU":
             break;
 
+        case "BACK_TO_SERVICE":
+            break;
+
         default:
             response = {
                 text: `Oops, I don't know response with postback ${payload}`,

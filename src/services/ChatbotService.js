@@ -16,6 +16,8 @@ const IMAGE_LIST_PHD = [
 
 const IMAGE_YOUNG_DOCTOR = ["https://bit.ly/48eI9wA", "https://bit.ly/46fzI2p"];
 
+const IMAGE_BACK_SERVICE = "https://bit.ly/3PDcwFN";
+
 function callSendAPI(sender_psid, response) {
     // Construct the message body
     let request_body = {
@@ -235,6 +237,18 @@ let getPHPTemplate = () => {
                             },
                         ],
                     },
+                    {
+                        title: "Quay trở lại",
+                        subtitle: "Quay trở lại dịch vụ",
+                        image_url: IMAGE_BACK_SERVICE,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "QUAY TRỞ LẠI",
+                                payload: "BACK_TO_SERVICE",
+                            },
+                        ],
+                    },
                 ],
             },
         },
@@ -285,6 +299,18 @@ let getYoungDoctorTemplate = () => {
                                 type: "postback",
                                 title: "XEM CHI TIẾT",
                                 payload: "LUONG_THUY_THU",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Quay trở lại",
+                        subtitle: "Quay trở lại dịch vụ",
+                        image_url: IMAGE_BACK_SERVICE,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "QUAY TRỞ LẠI",
+                                payload: "BACK_TO_SERVICE",
                             },
                         ],
                     },
