@@ -296,10 +296,15 @@ let setupPersistentMenu = async (req, res) => {
     return res.send("Setup persistent menu successfully!");
 };
 
+let handleBooking = (req, res) => {
+    return res.render("booking.ejs");
+};
+
 module.exports = {
     getHomePage,
     postWebhook,
     getWebhook,
     setupProfile,
     setupPersistentMenu,
+    handleBooking,
 };
