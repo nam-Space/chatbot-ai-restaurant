@@ -59,7 +59,7 @@ function handleClickButtonBooking() {
 
         let data = {
             psid: $("#psid").val(),
-            customerName: $("#customerName").val(),
+            patientName: $("#patientName").val(),
             email: $("#email").val(),
             phoneNumber: $("#phoneNumber").val(),
         };
@@ -78,7 +78,7 @@ function handleClickButtonBooking() {
 
             //send data to node.js server
             $.ajax({
-                url: `${window.location.origin}/reserve-table-ajax`,
+                url: `${window.location.origin}/booking-ajax`,
                 method: "POST",
                 data: data,
                 success: function (data) {

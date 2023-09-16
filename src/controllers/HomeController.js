@@ -65,7 +65,7 @@ let getWebhook = (req, res) => {
 };
 
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+async function handleMessage(sender_psid, received_message) {
     let response;
 
     // Checks if the message contains text
@@ -108,7 +108,7 @@ function handleMessage(sender_psid, received_message) {
     }
 
     // Send the response message
-    callSendAPI(sender_psid, response);
+    await chatbotService.callSendAPI(sender_psid, response);
 }
 
 // Handles messaging_postbacks events
@@ -300,6 +300,35 @@ let handleBooking = (req, res) => {
     return res.render("booking.ejs");
 };
 
+let handlePostBooking = async (req, res) => {
+    try {
+        let patientName = "";
+        if (!req.body.patientName) {
+            patientName = "Empty";
+        } else {
+            patientName = req.body.patientName;
+        }
+
+        let response1 = {
+            text: `---Thông tin bệnh nhân---
+            \nHọ và tên: ${patientName}
+            \nĐịa chỉ email: ${req.body.email}
+            \nSĐT: ${req.body.phoneNumber}
+            `,
+        };
+
+        await chatbotService.callSendAPI(response1);
+
+        return res.status(200).json({
+            message: "OK!",
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error!",
+        });
+    }
+};
+
 module.exports = {
     getHomePage,
     postWebhook,
@@ -307,4 +336,5 @@ module.exports = {
     setupProfile,
     setupPersistentMenu,
     handleBooking,
+    handlePostBooking,
 };

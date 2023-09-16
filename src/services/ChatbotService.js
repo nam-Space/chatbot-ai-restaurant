@@ -786,4 +786,5 @@ module.exports = {
     handleShowNerve,
     handleShowDigest,
     handleShowHeart,
+    callSendAPI,
 };
