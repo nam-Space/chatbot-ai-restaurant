@@ -10,11 +10,13 @@
     fjs.parentNode.insertBefore(js, fjs);
 })(document, "script", "Messenger");
 
+let APP_ID = 112573741947641;
+
 window.extAsyncInit = function () {
     // the Messenger Extensions JS SDK is done loading
 
     MessengerExtensions.getContext(
-        process.env.APP_ID,
+        APP_ID,
         function success(thread_context) {
             // success
             //set psid to input
