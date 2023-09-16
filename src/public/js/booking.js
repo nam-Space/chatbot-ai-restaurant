@@ -19,11 +19,11 @@ window.extAsyncInit = function () {
             // success
             //set psid to input
             $("#psid").val(thread_context.psid);
-            handleClickButtonReserveTable();
+            handleClickButtonBooking();
         },
         function error(err) {
             // error
-            console.log("Lỗi đặt bàn Eric bot", err);
+            console.log("Lỗi đặt lịch khám bệnh", err);
         }
     );
 };
@@ -53,7 +53,7 @@ function validateInputFields() {
     return false;
 }
 
-function handleClickButtonReserveTable() {
+function handleClickButtonBooking() {
     $("#btnReserveTable").on("click", function (e) {
         let check = validateInputFields(); //return true or false
 
