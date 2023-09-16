@@ -25,6 +25,26 @@ const IMAGE_SHOW_SPECIALTIES = [
     "https://cdn.bookingcare.vn/fr/w300/2023/06/20/112550-tim-mach.jpg",
 ];
 
+const IMAGE_SHOW_SPECIALTY_MUSCULOSKELETAL = [
+    "https://cdn.bookingcare.vn/fr/w200/2017/12/22/155419nguyen-thi-kim-loan.jpg",
+    "https://cdn.bookingcare.vn/fr/w200/2019/12/31/161832-bsckii-nguyen-thi-lan.jpg",
+];
+
+const IMAGE_SHOW_SPECIALTY_NERVE = [
+    "https://cdn.bookingcare.vn/fr/w200/2017/12/23/170155nguyen-van-doanh.jpg",
+    "https://cdn.bookingcare.vn/fr/w200/2019/11/21/104228-pgskd-hung.png",
+];
+
+const IMAGE_SHOW_SPECIALTY_DIGEST = [
+    "https://cdn.bookingcare.vn/fr/w200/2019/12/31/155650-gs-ha-van-quyet.jpg",
+    "https://cdn.bookingcare.vn/fr/w200/2020/01/03/084535-bsckii-le-tuyet-anh.jpg",
+];
+
+const IMAGE_SHOW_SPECIALTY_HEART = [
+    "https://cdn.bookingcare.vn/fr/w200/2022/05/05/104945-nguyen-van-quynh-pgs.jpg",
+    "https://cdn.bookingcare.vn/fr/w200/2018/12/06/150208bac-si-chuyen-khoa-ii-pham-xuan-hau.jpg",
+];
+
 let handleBackToService = async (sender_psid) => {
     await handleSightseeing(sender_psid);
 };
@@ -322,7 +342,6 @@ let getPHPTemplate = () => {
     };
     return response;
 };
-
 let handleShowPHD = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -387,7 +406,6 @@ let getYoungDoctorTemplate = () => {
     };
     return response;
 };
-
 let handleShowYoungDoctor = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -477,10 +495,273 @@ let getSpecialtiesTemplate = () => {
     return response;
 };
 
+// specialties
 let handleShowSpecialties = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
             let response1 = getSpecialtiesTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+// doctor of specialties
+let getMusculoskeletalTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Bác sĩ Nguyễn Thị Kim Loan",
+                        subtitle: "Được phong tặng Danh hiệu Thầy thuốc Ưu tú",
+                        image_url: IMAGE_SHOW_SPECIALTY_MUSCULOSKELETAL[0],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "NGUYEN_THI_KIM_LOAN",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Bác sĩ Nguyễn Thị Lan",
+                        subtitle: "Được phong tặng Danh hiệu Thầy thuốc Ưu tú",
+                        image_url: IMAGE_SHOW_SPECIALTY_MUSCULOSKELETAL[1],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "NGUYEN_THI_LAN",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Quay trở lại",
+                        subtitle: "Quay trở lại dịch vụ",
+                        image_url: IMAGE_BACK_SERVICE,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "QUAY TRỞ LẠI",
+                                payload: "BACK_TO_SERVICE",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+let handleShowMusculoskeletal = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response1 = getMusculoskeletalTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+let getNerveTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Bác sĩ Nguyễn Văn Doanh",
+                        subtitle:
+                            "Bác sĩ có 40 năm kinh nghiệm làm việc chuyên khoa Nội Thần kinh",
+                        image_url: IMAGE_SHOW_SPECIALTY_NERVE[0],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "NGUYEN_VAN_DOANH",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Tiến sĩ Kiều Đình Hùng",
+                        subtitle:
+                            "Trên 20 năm kinh nghiệm công tác ở khoa Phẫu thuật thần kinh - Bệnh viện Việt Đức",
+                        image_url: IMAGE_SHOW_SPECIALTY_NERVE[1],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "KIEU_DINH_HUNG",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Quay trở lại",
+                        subtitle: "Quay trở lại dịch vụ",
+                        image_url: IMAGE_BACK_SERVICE,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "QUAY TRỞ LẠI",
+                                payload: "BACK_TO_SERVICE",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+let handleShowNerve = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response1 = getNerveTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+let getDigestTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Tiến sĩ Hà Văn Quyết",
+                        subtitle:
+                            "Chuyên gia trên 35 năm kinh nghiệm trong lĩnh vực bệnh lý Tiêu hóa",
+                        image_url: IMAGE_SHOW_SPECIALTY_DIGEST[0],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "HA_VAN_QUYET",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Bác sĩ Lê Tuyết Anh",
+                        subtitle:
+                            "Nguyên bác sĩ Chuyên khoa II chuyên ngành Tiêu hóa, Bệnh viện Bạch Mai",
+                        image_url: IMAGE_SHOW_SPECIALTY_DIGEST[1],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "LE_TUYET_ANH",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Quay trở lại",
+                        subtitle: "Quay trở lại dịch vụ",
+                        image_url: IMAGE_BACK_SERVICE,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "QUAY TRỞ LẠI",
+                                payload: "BACK_TO_SERVICE",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+let handleShowDigest = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response1 = getDigestTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+let getHeartTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Bác sĩ Nguyễn Văn Quýnh",
+                        subtitle:
+                            "Chuyên gia hàng đầu về nội tim mạch với hơn 30 năm kinh nghiệm",
+                        image_url: IMAGE_SHOW_SPECIALTY_HEART[0],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "NGUYEN_VAN_QUYNH",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Tiến sĩ Nguyễn Lân Việt",
+                        subtitle: "Nguyên Hiệu trưởng trường Đại học Y Hà Nội",
+                        image_url: IMAGE_SHOW_SPECIALTY_HEART[1],
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "XEM CHI TIẾT",
+                                payload: "NGUYEN_LAN_VIET",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Quay trở lại",
+                        subtitle: "Quay trở lại dịch vụ",
+                        image_url: IMAGE_BACK_SERVICE,
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "QUAY TRỞ LẠI",
+                                payload: "BACK_TO_SERVICE",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+let handleShowHeart = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response1 = getHeartTemplate();
 
             // send message
             await callSendAPI(sender_psid, response1);
@@ -499,4 +780,8 @@ module.exports = {
     handleShowYoungDoctor,
     handleBackToService,
     handleShowSpecialties,
+    handleShowMusculoskeletal,
+    handleShowNerve,
+    handleShowDigest,
+    handleShowHeart,
 };

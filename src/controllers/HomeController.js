@@ -154,14 +154,33 @@ async function handlePostback(sender_psid, received_postback) {
             await chatbotService.handleBackToService(sender_psid);
             break;
 
+        // specialties
         case "SHOW_SPECIALTIES":
             await chatbotService.handleShowSpecialties(sender_psid);
             break;
 
+        // doctor of specialties
         case "CO_XUONG_KHOP":
+            await chatbotService.handleShowMusculoskeletal(sender_psid);
+            break;
         case "THAN_KINH":
+            await chatbotService.handleShowNerve(sender_psid);
+            break;
         case "TIEU_HOA":
+            await chatbotService.handleShowDigest(sender_psid);
+            break;
         case "TIM_MACH":
+            await chatbotService.handleShowHeart(sender_psid);
+            break;
+
+        case "NGUYEN_THI_KIM_LOAN":
+        case "NGUYEN_THI_LAN":
+        case "NGUYEN_VAN_DOANH":
+        case "KIEU_DINH_HUNG":
+        case "HA_VAN_QUYET":
+        case "LE_TUYET_ANH":
+        case "NGUYEN_VAN_QUYNH":
+        case "NGUYEN_LAN_VIET":
             break;
 
         default:
@@ -169,9 +188,6 @@ async function handlePostback(sender_psid, received_postback) {
                 text: `Oops, I don't know response with postback ${payload}`,
             };
     }
-
-    // Send the message to acknowledge the postback
-    // callSendAPI(sender_psid, response);
 }
 
 // Sends response messages via the Send API
