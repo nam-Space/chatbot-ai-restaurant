@@ -54,7 +54,7 @@ function validateInputFields() {
 }
 
 function handleClickButtonBooking() {
-    $("#btnReserveTable").on("click", function (e) {
+    $("#btnBooking").on("click", function (e) {
         let check = validateInputFields(); //return true or false
 
         let data = {
