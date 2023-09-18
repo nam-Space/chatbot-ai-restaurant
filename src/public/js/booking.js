@@ -78,18 +78,22 @@ function handleClickButtonBooking() {
             MessengerExtensions.requestCloseBrowser(
                 function success() {
                     // webview closed
-                    callAjax(data);
-                    $("#patientInfo").addClass("hidden");
-                    $("#success").removeClass("hidden");
+                    // callAjax(data);
+                    // $("#patientInfo").addClass("hidden");
+                    // $("#success").removeClass("hidden");
                 },
                 function error(err) {
                     // an error occurred
                     console.log(err);
-                    callAjax(data);
-                    $("#patientInfo").addClass("hidden");
-                    $("#success").removeClass("hidden");
+                    // callAjax(data);
+                    // $("#patientInfo").addClass("hidden");
+                    // $("#success").removeClass("hidden");
                 }
             );
+
+            callAjax(data);
+            $("#patientInfo").addClass("hidden");
+            $("#success").removeClass("hidden");
         }
     });
 }
