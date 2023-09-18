@@ -1,8 +1,40 @@
 require("dotenv").config();
 import request from "request";
 import chatbotService from "../services/ChatbotService";
+import { GoogleSpreadsheet } from "google-spreadsheet";
 
 let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
+const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
+
+let writeDataToGoogleSheet = async (data) => {
+    let currentDate = new Date();
+    const format = "HH:mm DD/MM/YYYY";
+    let formatedDate = moment(currentDate).format(format);
+
+    const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+
+    await doc.useServiceAccountAuth({
+        client_email: GOOGLE_SERVICE_ACCOUNT_EMAIL,
+        private_key: GOOGLE_PRIVATE_KEY,
+    });
+
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
+
+    // append rows
+    const userFbName = await chatbotService.getUsername(data.psid);
+
+    await sheet.addRow({
+        "Tên Facebook": userFbName,
+        Email: data.email,
+        "Số điện thoại": `'${data.phoneNumber}`,
+        "Thời gian": formatedDate,
+        "Tên khách hàng": data.patientName ? data.patientName : userFbName,
+    });
+};
 
 //process.env.NAME_VARIABLES
 let getHomePage = (req, res) => {
@@ -190,34 +222,6 @@ async function handlePostback(sender_psid, received_postback) {
     }
 }
 
-// Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-    // Construct the message body
-    let request_body = {
-        recipient: {
-            id: sender_psid,
-        },
-        message: response,
-    };
-
-    // Send the HTTP request to the Messenger Platform
-    request(
-        {
-            uri: "https://graph.facebook.com/v2.6/me/messages",
-            qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-            method: "POST",
-            json: request_body,
-        },
-        (err, res, body) => {
-            if (!err) {
-                console.log("message sent!");
-            } else {
-                console.error("Unable to send message:" + err);
-            }
-        }
-    );
-}
-
 let setupProfile = async (req, res) => {
     // Construct the message body
     let request_body = {
@@ -305,6 +309,8 @@ let handleBooking = (req, res) => {
 
 let handlePostBooking = async (req, res) => {
     try {
+        await writeDataToGoogleSheet(req.body);
+
         let patientName = "";
         if (!req.body.patientName) {
             patientName = await chatbotService.getUsername(req.body.psid);
