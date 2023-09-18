@@ -787,4 +787,5 @@ module.exports = {
     handleShowDigest,
     handleShowHeart,
     callSendAPI,
+    getUsername,
 };

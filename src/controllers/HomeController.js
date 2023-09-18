@@ -307,7 +307,7 @@ let handlePostBooking = async (req, res) => {
     try {
         let patientName = "";
         if (!req.body.patientName) {
-            patientName = "Empty";
+            patientName = chatbotService.getUsername(req.body.psid);
         } else {
             patientName = req.body.patientName;
         }
@@ -319,8 +319,6 @@ let handlePostBooking = async (req, res) => {
             \nSĐT: ${req.body.phoneNumber}
             `,
         };
-
-        console.log(req.body.psid);
 
         await chatbotService.callSendAPI(req.body.psid, response1);
 
