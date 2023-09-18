@@ -320,6 +320,8 @@ let handlePostBooking = async (req, res) => {
             `,
         };
 
+        console.log(req.body.psid);
+
         await chatbotService.callSendAPI(req.body.psid, response1);
 
         return res.status(200).json({
