@@ -313,7 +313,7 @@ let handlePostBooking = async (req, res) => {
         }
 
         let response1 = {
-            text: `---Thông tin bệnh nhân---
+            text: `---THÔNG TIN BỆNH NHÂN---
             \nHọ và tên: ${patientName}
             \nĐịa chỉ email: ${req.body.email}
             \nSĐT: ${req.body.phoneNumber}
