@@ -1,40 +1,44 @@
 require("dotenv").config();
 import request from "request";
 import chatbotService from "../services/ChatbotService";
-import { GoogleSpreadsheet } from "google-spreadsheet";
 import moment from "moment";
+const { GoogleSpreadsheet } = require("google-spreadsheet");
 
 let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
-const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
+let SPREADSHEET_ID = process.env.SPREADSHEET_ID;
+let GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+let GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 
 let writeDataToGoogleSheet = async (data) => {
-    let currentDate = new Date();
-    const format = "HH:mm DD/MM/YYYY";
-    let formatedDate = moment(currentDate).format(format);
+    try {
+        let currentDate = new Date();
+        const format = "HH:mm DD/MM/YYYY";
+        let formatedDate = moment(currentDate).format(format);
 
-    const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+        const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
-    await doc.useServiceAccountAuth({
-        client_email: JSON.parse(`"${GOOGLE_SERVICE_ACCOUNT_EMAIL}"`),
-        private_key: JSON.parse(`"${GOOGLE_PRIVATE_KEY}"`),
-    });
+        await doc.useServiceAccountAuth({
+            client_email: JSON.parse(`"${GOOGLE_SERVICE_ACCOUNT_EMAIL}"`),
+            private_key: JSON.parse(`"${GOOGLE_PRIVATE_KEY}"`),
+        });
+        console.log(doc);
+        await doc.loadInfo();
 
-    await doc.loadInfo();
+        const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
 
-    const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
+        // append rows
+        const userFbName = await chatbotService.getUsername(data.psid);
 
-    // append rows
-    const userFbName = await chatbotService.getUsername(data.psid);
-
-    await sheet.addRow({
-        "Tên Facebook": userFbName,
-        Email: data.email,
-        "Số điện thoại": `'${data.phoneNumber}`,
-        "Thời gian": formatedDate,
-        "Tên khách hàng": data.patientName ? data.patientName : userFbName,
-    });
+        await sheet.addRow({
+            "Tên Facebook": userFbName,
+            Email: data.email,
+            "Số điện thoại": `'${data.phoneNumber}`,
+            "Thời gian": formatedDate,
+            "Tên khách hàng": data.patientName ? data.patientName : userFbName,
+        });
+    } catch (error) {
+        console.log("Error when booking medical!");
+    }
 };
 
 //process.env.NAME_VARIABLES
