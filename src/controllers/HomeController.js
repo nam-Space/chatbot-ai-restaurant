@@ -21,7 +21,6 @@ let writeDataToGoogleSheet = async (data) => {
             client_email: JSON.parse(`"${GOOGLE_SERVICE_ACCOUNT_EMAIL}"`),
             private_key: JSON.parse(`"${GOOGLE_PRIVATE_KEY}"`),
         });
-        console.log(doc);
         await doc.loadInfo();
 
         const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
@@ -37,7 +36,7 @@ let writeDataToGoogleSheet = async (data) => {
             "Tên khách hàng": data.patientName ? data.patientName : userFbName,
         });
     } catch (error) {
-        console.log("Error when booking medical!");
+        console.log("Error when booking medical! " + error);
     }
 };
 
