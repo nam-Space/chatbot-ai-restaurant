@@ -297,7 +297,10 @@ let setupPersistentMenu = async (req, res) => {
 };
 
 let handleBooking = (req, res) => {
-    return res.render("booking.ejs");
+    let senderId = req.params.senderId;
+    return res.render("booking.ejs", {
+        senderId: senderId,
+    });
 };
 
 let handlePostBooking = async (req, res) => {

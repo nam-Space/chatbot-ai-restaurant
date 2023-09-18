@@ -25,7 +25,14 @@ window.extAsyncInit = function () {
         },
         function error(err) {
             // error
-            console.log("Lỗi đặt lịch khám bệnh", err);
+            console.log(
+                "Lỗi đặt lịch khám bệnh with MessengerExtensions.getContext: ",
+                err
+            );
+
+            // run backup, get UserId from URL
+            $("#psid").val(senderId);
+            handleClickButtonBooking();
         }
     );
 };
