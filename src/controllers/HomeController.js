@@ -11,9 +11,15 @@ let GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 
 let writeDataToGoogleSheet = async (data) => {
     try {
-        let currentDate = new Date();
-        const format = "HH:mm DD/MM/YYYY";
-        let formatedDate = moment(currentDate).format(format);
+        let formatedDate = new Date().toLocaleDateString("vi-VN", {
+            timezone: "Asia/Ho_Chi_Minh",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+        });
 
         const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
