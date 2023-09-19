@@ -61,7 +61,7 @@ let sendMarkReadMessage = (sender_psid) => {
     // Send the HTTP request to the Messenger Platform
     request(
         {
-            uri: `https://graph.facebook.com/v18.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+            uri: `https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
             qs: { access_token: PAGE_ACCESS_TOKEN },
             method: "POST",
             json: request_body,
@@ -88,7 +88,7 @@ let sendTypingOn = (sender_psid) => {
     // Send the HTTP request to the Messenger Platform
     request(
         {
-            uri: `https://graph.facebook.com/v18.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+            uri: `https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
             qs: { access_token: PAGE_ACCESS_TOKEN },
             method: "POST",
             json: request_body,
