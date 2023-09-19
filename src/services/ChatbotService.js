@@ -213,7 +213,7 @@ let handleGetStarted = (sender_psid) => {
     });
 };
 
-let getSightseeingTemplate = () => {
+let getSightseeingTemplate = (sender_psid) => {
     let response = {
         attachment: {
             type: "template",
@@ -273,7 +273,7 @@ let getSightseeingTemplate = () => {
 let handleSightseeing = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let response1 = getSightseeingTemplate();
+            let response1 = getSightseeingTemplate(sender_psid);
 
             // send message
             await callSendAPI(sender_psid, response1);
