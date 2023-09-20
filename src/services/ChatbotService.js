@@ -225,7 +225,7 @@ let getStartedQuickReplyTemplate = (sender_psid) => {
             },
             {
                 content_type: "postback",
-                title: "HƯỚNG DẪN SỬ DỤNG BOT",
+                title: "HD SỬ DỤNG BOT",
                 payload: "GUIDE_TO_USE",
             },
         ],
