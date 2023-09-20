@@ -800,6 +800,13 @@ let getHeartTemplate = () => {
                                 title: "QUAY TRỞ LẠI",
                                 payload: "BACK_TO_SERVICE",
                             },
+                            {
+                                type: "web_url",
+                                url: `${process.env.URL_WEB_VIEW_ORDER}/${sender_psid}`,
+                                title: "ĐẶT LỊCH KHÁM BỆNH",
+                                webview_height_ratio: "tall",
+                                messenger_extensions: true,
+                            },
                         ],
                     },
                 ],
@@ -823,6 +830,62 @@ let handleShowHeart = (sender_psid) => {
     });
 };
 
+let getMediaTemplate = () => {
+    let response = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "media",
+                elements: [
+                    {
+                        media_type: "video",
+                        url: "https://www.facebook.com/61550942528079/videos/1111156336527856/",
+                    },
+                    {
+                        buttons: [
+                            {
+                                type: "postback",
+                                title: "THAM QUAN DỊCH VỤ",
+                                payload: "SIGHTSEEING",
+                            },
+                            {
+                                type: "web_url",
+                                url: `${process.env.URL_WEB_VIEW_ORDER}/${sender_psid}`,
+                                title: "ĐẶT LỊCH KHÁM BỆNH",
+                                webview_height_ratio: "tall",
+                                messenger_extensions: true,
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    };
+    return response;
+};
+
+let handleGuideToUse = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let username = await getUsername(sender_psid);
+            let response1 = {
+                text: `Xin chào bạn ${username}, mình là Chatbot của Booking Care\nĐể biết thêm thông tin, bạn vui lòng xem video bên dưới😊😃`,
+            };
+
+            let response2 = getMediaTemplate();
+
+            // send message
+            await callSendAPI(sender_psid, response1);
+
+            await callSendAPI(sender_psid, response2);
+
+            resolve("OK!");
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 module.exports = {
     handleGetStarted,
     handleSightseeing,
@@ -836,4 +899,5 @@ module.exports = {
     handleShowHeart,
     callSendAPI,
     getUsername,
+    handleGuideToUse,
 };

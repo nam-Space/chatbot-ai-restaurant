@@ -114,6 +114,7 @@ async function handleMessage(sender_psid, received_message) {
         if (received_message.quick_reply.payload === "SIGHTSEEING") {
             await chatbotService.handleSightseeing(sender_psid);
         } else if (received_message.quick_reply.payload === "GUIDE_TO_USE") {
+            await chatbotService.handleGuideToUse(sender_psid);
         }
         return;
     }
@@ -231,6 +232,10 @@ async function handlePostback(sender_psid, received_postback) {
         case "LE_TUYET_ANH":
         case "NGUYEN_VAN_QUYNH":
         case "NGUYEN_LAN_VIET":
+            break;
+
+        case "GUIDE_TO_USE":
+            await chatbotService.handleGuideToUse(sender_psid);
             break;
 
         default:
