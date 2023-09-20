@@ -108,31 +108,38 @@ let sendTypingOn = (sender_psid) => {
 
 async function callSendAPI(sender_psid, response) {
     // Construct the message body
-    let request_body = {
-        recipient: {
-            id: sender_psid,
-        },
-        message: response,
-    };
+    return new Promise(async (resolve, reject) => {
+        try {
+            let request_body = {
+                recipient: {
+                    id: sender_psid,
+                },
+                message: response,
+            };
 
-    await sendMarkReadMessage(sender_psid);
-    await sendTypingOn(sender_psid);
-    // Send the HTTP request to the Messenger Platform
-    await request(
-        {
-            uri: "https://graph.facebook.com/v2.6/me/messages",
-            qs: { access_token: PAGE_ACCESS_TOKEN },
-            method: "POST",
-            json: request_body,
-        },
-        (err, res, body) => {
-            if (!err) {
-                console.log("message sent!");
-            } else {
-                console.error("Unable to send message:" + err);
-            }
+            await sendMarkReadMessage(sender_psid);
+            await sendTypingOn(sender_psid);
+            // Send the HTTP request to the Messenger Platform
+            await request(
+                {
+                    uri: "https://graph.facebook.com/v2.6/me/messages",
+                    qs: { access_token: PAGE_ACCESS_TOKEN },
+                    method: "POST",
+                    json: request_body,
+                },
+                (err, res, body) => {
+                    if (!err) {
+                        resolve("message sent!");
+                    } else {
+                        console.log("Unable to send message:" + err);
+                        resolve("Something went wrong!");
+                    }
+                }
+            );
+        } catch (error) {
+            reject(error);
         }
-    );
+    });
 }
 
 let getUsername = (sender_psid) => {
