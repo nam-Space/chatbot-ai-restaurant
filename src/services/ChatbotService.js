@@ -3,6 +3,9 @@ import request from "request";
 
 let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+const IMAGE_GIF_WELCOME =
+    "https://media4.giphy.com/media/d3YGJTtNiJIejEGI/giphy.gif?cid=ecf05e470cfsbxh1pvopahq3cyng0qxr1vxl5zrmhhb1938i&ep=v1_gifs_search&rid=giphy.gif&ct=g";
+
 const IMAGE_GET_STARTED = "https://bit.ly/nam-bot-1";
 const IMAGE_BACK_SERVICE = "https://bit.ly/3PDcwFN";
 
@@ -191,6 +194,38 @@ let getStartedTemplate = (sender_psid) => {
     return response;
 };
 
+let getImageGetStartedTemplate = (sender_psid) => {
+    let response = {
+        attachment: {
+            type: "image",
+            payload: {
+                url: IMAGE_GIF_WELCOME,
+                is_reusable: true,
+            },
+        },
+    };
+    return response;
+};
+
+let getStartedQuickReplyTemplate = (sender_psid) => {
+    let response = {
+        text: "Dưới đây là 1 số lựa chọn của bạn:",
+        quick_replies: [
+            {
+                content_type: "text",
+                title: "THAM QUAN DỊCH VỤ",
+                payload: "SIGHTSEEING",
+            },
+            {
+                content_type: "postback",
+                title: "HƯỚNG DẪN SỬ DỤNG BOT",
+                payload: "GUIDE_TO_USE",
+            },
+        ],
+    };
+    return response;
+};
+
 let handleGetStarted = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -199,13 +234,17 @@ let handleGetStarted = (sender_psid) => {
                 text: `Chào mừng bạn ${username} đến với Booking Care của Nam Nguyễn`,
             };
 
-            let response2 = getStartedTemplate(sender_psid);
+            let response2 = getImageGetStartedTemplate(sender_psid);
+            let response3 = getStartedQuickReplyTemplate(sender_psid);
 
             // send message
             await callSendAPI(sender_psid, response1);
 
-            // send generic template
+            // send an image
             await callSendAPI(sender_psid, response2);
+
+            // send a quick reply
+            await callSendAPI(sender_psid, response3);
             resolve("OK!");
         } catch (error) {
             reject(error);
