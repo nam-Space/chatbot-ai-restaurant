@@ -840,8 +840,6 @@ let getMediaTemplate = (sender_psid) => {
                     {
                         media_type: "video",
                         url: "https://www.facebook.com/61550942528079/videos/1111156336527856/",
-                    },
-                    {
                         buttons: [
                             {
                                 type: "postback",
