@@ -173,9 +173,11 @@ async function handlePostback(sender_psid, received_postback) {
     switch (payload) {
         case "yes":
             response = { text: "Thanks!" };
+            await chatbotService.callSendAPI(sender_psid, response);
             break;
         case "no":
             response = { text: "Oops, try sending another image." };
+            await chatbotService.callSendAPI(sender_psid, response);
             break;
         case "RESTART_BOT":
         case "GET_STARTED":
