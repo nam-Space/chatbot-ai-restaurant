@@ -830,7 +830,7 @@ let handleShowHeart = (sender_psid) => {
     });
 };
 
-let getMediaTemplate = () => {
+let getMediaTemplate = (sender_psid) => {
     let response = {
         attachment: {
             type: "template",
@@ -872,7 +872,7 @@ let handleGuideToUse = (sender_psid) => {
                 text: `Xin chào bạn ${username}, mình là Chatbot của Booking Care\nĐể biết thêm thông tin, bạn vui lòng xem video bên dưới😊😃`,
             };
 
-            let response2 = getMediaTemplate();
+            let response2 = getMediaTemplate(sender_psid);
 
             // send message
             await callSendAPI(sender_psid, response1);
