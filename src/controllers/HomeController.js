@@ -110,6 +110,14 @@ let getWebhook = (req, res) => {
 async function handleMessage(sender_psid, received_message) {
     let response;
 
+    if (received_message?.quick_reply?.payload) {
+        if (received_message.quick_reply.payload === "SIGHTSEEING") {
+            await chatbotService.handleSightseeing(sender_psid);
+        } else if (received_message.quick_reply.payload === "GUIDE_TO_USE") {
+        }
+        return;
+    }
+
     // Checks if the message contains text
     if (received_message.text) {
         // Create the payload for a basic text message, which

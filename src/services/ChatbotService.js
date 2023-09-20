@@ -201,7 +201,7 @@ let getStartedTemplate = (sender_psid) => {
     return response;
 };
 
-let getImageGetStartedTemplate = (sender_psid) => {
+let getImageGetStartedTemplate = () => {
     let response = {
         attachment: {
             type: "image",
@@ -214,7 +214,7 @@ let getImageGetStartedTemplate = (sender_psid) => {
     return response;
 };
 
-let getStartedQuickReplyTemplate = (sender_psid) => {
+let getStartedQuickReplyTemplate = () => {
     let response = {
         text: "Dưới đây là 1 số lựa chọn của bạn:",
         quick_replies: [
@@ -241,8 +241,8 @@ let handleGetStarted = (sender_psid) => {
                 text: `Chào mừng bạn ${username} đến với Booking Care của Nam Nguyễn`,
             };
 
-            let response2 = getImageGetStartedTemplate(sender_psid);
-            let response3 = getStartedQuickReplyTemplate(sender_psid);
+            let response2 = getImageGetStartedTemplate();
+            let response3 = getStartedQuickReplyTemplate();
 
             // send message
             await callSendAPI(sender_psid, response1);
