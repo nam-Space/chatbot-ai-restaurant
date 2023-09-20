@@ -219,12 +219,12 @@ let getStartedQuickReplyTemplate = (sender_psid) => {
         text: "Dưới đây là 1 số lựa chọn của bạn:",
         quick_replies: [
             {
-                content_type: "postback",
+                content_type: "text",
                 title: "THAM QUAN DỊCH VỤ",
                 payload: "SIGHTSEEING",
             },
             {
-                content_type: "postback",
+                content_type: "text",
                 title: "HD SỬ DỤNG BOT",
                 payload: "GUIDE_TO_USE",
             },
