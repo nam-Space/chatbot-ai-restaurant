@@ -758,7 +758,7 @@ let handleShowDigest = (sender_psid) => {
     });
 };
 
-let getHeartTemplate = () => {
+let getHeartTemplate = (sender_psid) => {
     let response = {
         attachment: {
             type: "template",
@@ -818,7 +818,7 @@ let getHeartTemplate = () => {
 let handleShowHeart = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let response1 = getHeartTemplate();
+            let response1 = getHeartTemplate(sender_psid);
 
             // send message
             await callSendAPI(sender_psid, response1);
